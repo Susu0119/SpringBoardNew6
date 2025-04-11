@@ -4,7 +4,16 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.itwillbs.mapper.BoardMapper">
+	<!-- 시간 정보 조회 -->
 	<select id="getServerTime" resultType="string">
-		SELECT now();
+		SELECT now()
 	</select>
+	<!-- 시간 정보 조회 -->
+	
+	<!-- 게시판 글쓰기 * getter/setter 꼭 필요 -->
+	<insert id="insertBoard">
+		INSERT INTO tbl_board (title,content,writer) 
+		values(#{title}, #{content}, #{writer})
+	</insert>
+	<!-- 게시판 글쓰기 -->
 </mapper>
