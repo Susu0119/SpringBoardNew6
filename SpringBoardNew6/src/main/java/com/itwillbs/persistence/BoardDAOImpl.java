@@ -3,7 +3,11 @@ package com.itwillbs.persistence;
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
+
+import com.itwillbs.domain.BoardVO;
 
 /**
  * 
@@ -14,6 +18,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class BoardDAOImpl implements BoardDAO {
+	
+	// mylog
+	private static final Logger logger = LoggerFactory.getLogger(BoardDAOImpl.class);
+	
 	// sqlSession 객체 주입
 	@Inject
 	private SqlSession sqlSession;
@@ -28,5 +36,17 @@ public class BoardDAOImpl implements BoardDAO {
 		String time = sqlSession.selectOne(NAMESPACE + "getServerTime");
 		
 		return time;
+	}
+	
+	@Override
+	public void insertBoard(BoardVO vo) throws Exception {
+		logger.info(" insertBoard(BoardVO vo) 실행! ");
+		logger.info(" 전달받은 정보를 사용해서 SQL구문 실행 (mapper 실행) ");
+		
+		// 디비 연결 객체를 사용해서 필요한 SQL 구문 실행
+		// com.itwillbs.mapper.BoardMapper.insertBoard
+		sqlSession.insert(NAMESPACE + "insertBoard", vo);
+		
+		logger.info(" mapper 실행 완료! -> 결과를 서비스로 전달 ");
 	}
 }

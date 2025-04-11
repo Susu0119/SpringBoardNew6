@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="include/header.jsp" %>
+<%@ include file="../include/header.jsp" %>
 
 	<div class="info-box bg-green">
       <span class="info-box-icon"><i class="ion ion-ios-heart-outline"></i></span>
@@ -19,4 +19,4 @@
       <!-- /.info-box-content -->
     </div>
     
-<%@ include file="include/footer.jsp" %>
+<%@ include file="../include/footer.jsp" %>
