@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.itwillbs.domain.BoardVO;
@@ -71,7 +72,7 @@ public class BoardController {
 	
 	// 게시판 목록 - GET
 	@RequestMapping(value="/listAll", method=RequestMethod.GET)
-	public String listAllGET(@ModelAttribute("result") String result, Model model) throws Exception {
+	public void listAllGET(@ModelAttribute("result") String result, Model model) throws Exception {
 		logger.info(" listAllGET() 실행 ");
 		
 		// 전달정보 result 저장
@@ -86,7 +87,23 @@ public class BoardController {
 		model.addAttribute("boardList", boardList);
 		
 		// 연결된 뷰페이지로 이동 (/board/listAll.jsp)
-		return "/board/listAll";
+	}
+	
+	// 게시판 본문보기 GET  /board/read 
+	@RequestMapping(value="/read", method=RequestMethod.GET)
+	public String readGET(@RequestParam("bno") int bno) throws Exception {
+		logger.info(" readGET() 실행 ");
+		
+		// 서비스 -> DAO -> mapper 호출
+		// 전달 정보(bno)를 저장
+		logger.info(" bno : {} ", bno);
+		
+		// 서비스 -> 글 하나의 정보 조회하는 동작 호출
+		
+		
+		// DAO에서 받아온 글 정보를 연결된 뷰페이지(/board/read.jsp)로 이동
+		
+		return "/board/read";
 	}
 	
 }
