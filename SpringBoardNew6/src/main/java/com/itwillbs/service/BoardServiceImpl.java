@@ -43,7 +43,7 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Override
 	public List<BoardVO> getBoardListAll() throws Exception {
-		logger.info(" getBoardListAll() 호출! ");
+		logger.info(" getBoardListAll() 실행! ");
 		
 		// DAO 동작 호출
 		List<BoardVO> boardList = bDAO.selectBoardListAll();
@@ -55,11 +55,18 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Override
 	public BoardVO getBoard(int bno) throws Exception {
-		logger.info(" getBoard(int bno) 호출! ");
+		logger.info(" getBoard(int bno) 실행! ");
 		
 		// DAO - 특정 글정보를 조회
+		BoardVO vo = bDAO.selectBoard(bno);
 		
+		return vo;
+	}
+	
+	@Override
+	public void increaseViewCnt(int bno) throws Exception {
+		logger.info(" increaseViewCnt(int bno) 실행! ");
 		
-		return null;
+		bDAO.updateViewCount(bno);
 	}
 }

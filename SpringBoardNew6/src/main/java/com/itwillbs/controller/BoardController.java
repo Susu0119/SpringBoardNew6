@@ -91,17 +91,22 @@ public class BoardController {
 	
 	// 게시판 본문보기 GET  /board/read 
 	@RequestMapping(value="/read", method=RequestMethod.GET)
-	public String readGET(@RequestParam("bno") int bno) throws Exception {
+	public String readGET(@RequestParam("bno") int bno, Model model) throws Exception {
 		logger.info(" readGET() 실행 ");
 		
 		// 서비스 -> DAO -> mapper 호출
 		// 전달 정보(bno)를 저장
 		logger.info(" bno : {} ", bno);
 		
-		// 서비스 -> 글 하나의 정보 조회하는 동작 호출
+		// 서비스 -> 글 조회수를 1씩 증가 동작
+		bService.increaseViewCnt(bno);
 		
+		// 서비스 -> 글 하나의 정보 조회하는 동작 호출
+		BoardVO vo = bService.getBoard(bno);
+		logger.info(" vo : {} ", vo);
 		
 		// DAO에서 받아온 글 정보를 연결된 뷰페이지(/board/read.jsp)로 이동
+		model.addAttribute(vo);
 		
 		return "/board/read";
 	}
