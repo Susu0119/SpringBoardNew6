@@ -38,4 +38,12 @@
 		WHERE bno = #{bno}
 	</update>
 	<!-- 게시판 특정 글 조회 시 조회수 1 증가 -->
+	
+	<!-- 게시판 수정하기 -->
+	<update id="updateContent">
+		UPDATE tbl_board
+		SET content = ${}
+		WHERE bno = #{bno}
+	</update>
+	<!-- 게시판 수정하기 -->
 </mapper>
