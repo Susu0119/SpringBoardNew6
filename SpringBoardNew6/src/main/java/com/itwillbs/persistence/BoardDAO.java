@@ -24,4 +24,10 @@ public interface BoardDAO {
 	
 	// 게시판 글 전체 목록 조회하기
 	public List<BoardVO> selectBoardListAll() throws Exception;
+	
+	// 게시판 글 정보를 조회
+	public BoardVO selectBoard(int bno) throws Exception;
+	
+	// 특정 글 조회 시 조회수 증가
+	public void updateViewCount(int bno) throws Exception;
 }

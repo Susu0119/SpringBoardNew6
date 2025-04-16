@@ -6,8 +6,8 @@
 
 <div class ="content">
 	<h1>listAll.jsp</h1>
-	${result }
-	${boardList }
+	<%-- ${result }
+	${boardList } --%>
 	
 	<!-- 게시판 목록 출력 -->
 	<div class="box">
@@ -28,7 +28,9 @@
 				<c:forEach var="vo" items="${boardList}"  >
 					<tr>
 					    <td>${vo.bno }</td>
-					    <td>${vo.title }</td>
+					    <td>
+					    	<a href="/board/read?bno=${vo.bno }">${vo.title }</a>
+					    </td>
 					    <td>${vo.writer }</td>
 					    <td><fmt:formatDate value="${vo.regdate }"/></td>
 					    <td><span class="badge bg-red">0</span></td>
