@@ -33,4 +33,7 @@ public interface BoardDAO {
 	
 	// 특정 글 수정
 	public void updateBoard(BoardVO uvo) throws Exception;
+	
+	// 특정 글 삭제
+	public Integer deleteBoard(BoardVO dvo) throws Exception;
 }

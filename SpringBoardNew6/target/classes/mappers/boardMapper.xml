@@ -56,4 +56,11 @@
 		WHERE bno = #{bno}
 	</update>
 	<!-- 특정 글 게시판 수정 -->
+	
+	<!-- 특정 게시판 글 삭제 -->
+	<delete id="deleteBoard">
+		DELETE FROM tbl_board
+		WHERE bno = #{bno}
+	</delete>
+	<!-- 특정 게시판 글 삭제 -->
 </mapper>
