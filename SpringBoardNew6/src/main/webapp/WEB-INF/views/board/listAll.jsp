@@ -58,8 +58,31 @@
 	// alert(result);
 	
 	if(result == "createOK") {
-		alert(" 글쓰기 완료! ");
+		// alert(" 글쓰기 완료! ");
+		Swal.fire({
+			title: " 글쓰기 완료! ",
+			text: " 게시판 리스트로 이동합니다! ",
+			icon: "success"
+		});
 	}
+	
+	if(result == "modifyOK") {
+		// alert(" 글수정 완료! ");
+		Swal.fire({
+			title: " 글수정 완료! ",
+			text: " 게시판 리스트로 이동합니다! ",
+			icon: "success"
+		});
+	}
+</script>
+
+<script type="text/javascript">
+	// JS 사용 -> 사용 가능!
+	// Swal.fire("SweetAlert2 is working!");
+	// 제이쿼리 사용 선언 후 추가 -> 사용 가능!
+	$(document).ready(function() {
+		// Swal.fire("SweetAlert2 is working!");
+	})
 </script>
 
 <%@ include file="../include/footer.jsp"%>

@@ -13,7 +13,7 @@
 		<div class="box-body">
 			<div class="form-group">
 				<label for="exampleInputEmail1">번 호</label> 
-				<input type="text" class="form-control" id="exampleInputEmail1" value="${boardVO.bno }" name="title" placeholder="제목을 입력하시오." readonly>
+				<input type="text" class="form-control" id="exampleInputEmail1" value="${boardVO.bno }" name="bno" placeholder="제목을 입력하시오." readonly>
 			</div>
 		</div>
 		<div class="box-body">

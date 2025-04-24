@@ -136,6 +136,25 @@ public class BoardController {
 		// 연결된 뷰페이지 출력
 		
 	}
+	
 	// 글정보 수정하기 - POST
+	@RequestMapping(value="/modify", method=RequestMethod.POST)
+	public String modifyPOST(RedirectAttributes rttr, /* @ModelAttribute 생략 */ BoardVO uvo) throws Exception{
+		logger.info(" modifyPOST() 실행 ");
+		
+		// 한글처리 인코딩 (이미 필터 처리 완료! - web.xml)
+		// 전달된 정보(수정할 내용)를 저장 => 파라메터 자동 수집
+		
+		logger.info(" uvo:  " + uvo);
+		
+		// 서비스 - 사용자의 게시판 글 수정 메서드 호출
+		bService.modifyBoard(uvo);
+		logger.info(" 게시판 수정 성공! ");
+		
+		// 리스트(listAll.jsp)로 이동 + 수정 완료라는 메세지 alert 출력
+		rttr.addAttribute("result", "modifyOK");
+		
+		return "redirect:/board/listAll";
+	}
 	
 }

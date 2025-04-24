@@ -81,4 +81,11 @@ public class BoardDAOImpl implements BoardDAO {
 		
 		sqlSession.update(NAMESPACE + "updateViewcnt", bno);
 	}
+	
+	@Override
+	public void updateBoard(BoardVO uvo) throws Exception {
+		logger.info(" updateBoard(BoardVO uvo) 실행 ");
+		
+		sqlSession.update(NAMESPACE + "updateBoard", uvo);
+	}
 }

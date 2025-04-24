@@ -24,4 +24,7 @@ public interface BoardService {
 	
 	// 특정 글(bno) 조회 시 그 글의 조회수 증가
 	public void increaseViewCnt(int bno) throws Exception;
+	
+	// 특정 글 정보 수정
+	public void modifyBoard(BoardVO uvo) throws Exception;
 }

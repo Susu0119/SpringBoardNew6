@@ -65,7 +65,7 @@
 		
 		// 수정하기 버튼 클릭 시 
 		$(".btn-danger").click(function(){
-			alert("수정하기 버튼 클릭!")
+			// alert("수정하기 버튼 클릭!")
 			// 글 번호를 가지고 이동 (폼태그)
 			// /board/modify라는 주소로 이동, get방식 사용 페이지 이동
 			fr.attr("action", "/board/modify");

@@ -46,4 +46,14 @@
 		WHERE bno = #{bno}
 	</update>
 	<!-- 게시판 수정하기 -->
+	
+	<!-- 특정 글 게시판 수정 -->
+	<update id="updateBoard">
+		UPDATE tbl_board 
+		SET title = #{title},
+			content = #{content},
+			writer = #{writer}
+		WHERE bno = #{bno}
+	</update>
+	<!-- 특정 글 게시판 수정 -->
 </mapper>
