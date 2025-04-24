@@ -89,6 +89,7 @@ public class BoardController {
 		
 		// Session 영역에 정보를 저장 & 전달
 		session.setAttribute("updateCheck", true);
+		session.setAttribute("id", "ok");
 		
 		// 연결된 뷰페이지로 이동 (/board/listAll.jsp)
 	}
@@ -105,6 +106,7 @@ public class BoardController {
 		// 리스트 -> 본문 이동 시 마다 조회수가 증가
 		// (본문에서 새로고침 수행해도 조회수 증가 X)
 		boolean updateCheck = (boolean) session.getAttribute("updateCheck");
+		
 		if(updateCheck) {
 			// 서비스 -> 글 조회수를 1씩 증가 동작
 			bService.increaseViewCnt(bno);
@@ -154,6 +156,28 @@ public class BoardController {
 		// 리스트(listAll.jsp)로 이동 + 수정 완료라는 메세지 alert 출력
 		rttr.addAttribute("result", "modifyOK");
 		
+		return "redirect:/board/listAll";
+	}
+	
+	@RequestMapping(value="/remove", method=RequestMethod.POST)
+	public String removePOST(RedirectAttributes rttr, BoardVO dvo) throws Exception {
+		logger.info(" removePOST() 호출! ");
+		
+		// 전달된 정보 (bno) 저장
+		logger.info("dvo :" + dvo);
+		
+		// 서비스 - 특정 글 정보 삭제 기능 
+		int result = bService.removeBoard(dvo);
+		
+		if(result == 0) {
+			// 삭제 실패
+			rttr.addFlashAttribute("result", "deleteErr");
+			// return "redirect:/board/read?bno="+dvo.getBno();
+			return "redirect:/board/listAll";
+		} 
+		
+		// 삭제 성공!
+		rttr.addFlashAttribute("result", "deleteOK");
 		return "redirect:/board/listAll";
 	}
 	
