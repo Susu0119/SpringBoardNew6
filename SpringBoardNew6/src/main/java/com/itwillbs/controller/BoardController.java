@@ -195,9 +195,9 @@ public class BoardController {
 		
 		// 기존의 DB 데이터를 가져와서 화면(view)에 출력
 		// = Service를 통해서 DAO를 호출
-		Criteria criteria = new Criteria();
-		criteria.setPage(1);
-		criteria.setPageSize(10);
+//		Criteria criteria = new Criteria();
+//		criteria.setPage(1);
+//		criteria.setPageSize(10);
 		
 		List<BoardVO> boardList = bService.getBoardListPage(criteria);
 		logger.info(" BoardList : {} 개", boardList.size());
