@@ -63,4 +63,22 @@
 		WHERE bno = #{bno}
 	</delete>
 	<!-- 특정 게시판 글 삭제 -->
+	
+	<!-- 게시판 목록 조회 (페이징 처리) -->
+	<select id="listPage" resultType="BoardVO">
+		SELECT * FROM tbl_board
+		<!-- ORDER BY bno desc, regdate desc -->
+		<!-- LIMIT 10,10 -->
+		LIMIT #{page}, 10
+	</select>
+	<!-- 게시판 목록 조회 (페이징 처리) -->
+
+	<!-- 게시판 목록 조회 (페이징 처리) -->
+	<select id="listCriteria" resultType="BoardVO">
+		SELECT * FROM tbl_board
+		ORDER BY bno desc, regdate desc
+		<!-- LIMIT 10,10 -->
+		LIMIT #{startPage}, #{pageSize}
+	</select>
+	<!-- 게시판 목록 조회 (페이징 처리) -->
 </mapper>

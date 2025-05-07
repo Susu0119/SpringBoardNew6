@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.itwillbs.domain.BoardVO;
+import com.itwillbs.domain.Criteria;
 import com.itwillbs.persistence.BoardDAO;
 
 /**
@@ -43,7 +44,7 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Override
 	public List<BoardVO> getBoardListAll() throws Exception {
-		logger.info(" getBoardListAll() 실행! ");
+		logger.info(" getBoardListAll() 호출! ");
 		
 		// DAO 동작 호출
 		List<BoardVO> boardList = bDAO.selectBoardListAll();
@@ -55,7 +56,7 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Override
 	public BoardVO getBoard(int bno) throws Exception {
-		logger.info(" getBoard(int bno) 실행! ");
+		logger.info(" getBoard(int bno) 호출! ");
 		
 		// DAO - 특정 글정보를 조회
 		BoardVO vo = bDAO.selectBoard(bno);
@@ -65,20 +66,27 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Override
 	public void increaseViewCnt(int bno) throws Exception {
-		logger.info(" increaseViewCnt(int bno) 실행! ");
+		logger.info(" increaseViewCnt(int bno) 호출! ");
 		
 		bDAO.updateViewCount(bno);
 	}
 	
 	@Override
 	public void modifyBoard(BoardVO uvo) throws Exception {
-		logger.info(" modifyBoard(BoardVO uvo) 실행! ");
+		logger.info(" modifyBoard(BoardVO uvo) 호출! ");
 		
 		bDAO.updateBoard(uvo);
 	}
 	@Override
 	public Integer removeBoard(BoardVO dvo) throws Exception {
-		logger.info(" removeBoard(BoardVO dvo) 실행! ");
+		logger.info(" removeBoard(BoardVO dvo) 호출! ");
 		return bDAO.deleteBoard(dvo);
+	}
+	
+	@Override
+	public List<BoardVO> getBoardListPage(Criteria criteria) throws Exception {
+		logger.info(" getBoardListPage(Criteria criteria) 호출! ");
+		
+		return bDAO.listPage(criteria);
 	}
 }
