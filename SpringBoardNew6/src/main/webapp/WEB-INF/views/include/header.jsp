@@ -324,7 +324,7 @@
               </a>
               <ul class="treeview-menu">
                 <li><a href="/board/regist"><i class="fa fa-circle-o"></i>글 쓰기</a></li>
-                <li><a href="/board/listAll"><i class="fa fa-circle-o"></i>글 목록(list)</a></li>
+                <li><a href="/board/listPage"><i class="fa fa-circle-o"></i>글 목록(list)</a></li>
               </ul>
             </li>
             <li class="treeview">

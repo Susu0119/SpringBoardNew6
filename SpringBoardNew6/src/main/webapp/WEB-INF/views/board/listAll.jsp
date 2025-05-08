@@ -3,7 +3,7 @@
 <%-- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> --%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../include/header.jsp"%>
-
+${pageVO }
 <div class ="content">
 	<h1>listAll.jsp</h1>
 	<%-- ${result }
@@ -29,7 +29,7 @@
 					<tr>
 					    <td>${vo.bno }</td>
 					    <td>
-					    	<a href="/board/read?bno=${vo.bno }">${vo.title }</a>
+					    	<a href="/board/read?bno=${vo.bno }&page=${criteria.page }">${vo.title }</a>
 					    </td>
 					    <td>${vo.writer }</td>
 					    <td><fmt:formatDate value="${vo.regdate }"/></td>
@@ -42,11 +42,15 @@
 		<!-- /.box-body -->
 		  <div class="box-footer clearfix">
 		    <ul class="pagination pagination-sm no-margin pull-right">
-		      <li><a href="#">«</a></li>
-		      <li><a href="#">1</a></li>
-		      <li><a href="#">2</a></li>
-		      <li><a href="#">3</a></li>
-		      <li><a href="#">»</a></li>
+		      <c:if test="${pageVO.prev }">
+			      <li><a href="/board/listPage?page=${pageVO.startPage-1 }">«</a></li>
+		      </c:if>
+		      <c:forEach var="i" begin="${pageVO.startPage }" end="${pageVO.endPage }" step="1">
+			      <li class="${pageVO.criteria.page == i? 'active' : '' }"><a href="/board/listPage?page=${i }">${i }</a></li>		      
+		      </c:forEach>
+		      <c:if test="${pageVO.next }">
+			      <li><a href="/board/listPage?page=${pageVO.endPage+1 }">»</a></li>
+		      </c:if>  
 		    </ul>
 		  </div>
 		</div>

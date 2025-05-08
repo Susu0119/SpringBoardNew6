@@ -5,6 +5,7 @@
 
 <form role="form" action="" method="get">
 	<input type="hidden" name="bno" value="${boardVO.bno }">
+	<input type="hidden" name="page" value="${param.page }">
 </form>
 
 <div class="box box-primary">
@@ -58,7 +59,7 @@
 		// alert("Hello!");
 		// 목록으로 버튼을 클릭하면 이동하도록
 		$(".btn-primary").click(function(){
-			location.href="/board/listAll";
+			location.href="/board/listPage?page=${param.page }";
 		});
 		
 		// 폼 태그 정보 가져오기

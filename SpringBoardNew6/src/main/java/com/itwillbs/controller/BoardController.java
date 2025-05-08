@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.itwillbs.domain.BoardVO;
 import com.itwillbs.domain.Criteria;
+import com.itwillbs.domain.PageVO;
 import com.itwillbs.service.BoardService;
 
 @Controller
@@ -69,7 +70,7 @@ public class BoardController {
 		
 		// 게시판 글 목록 페이지로 이동
 		// return "/board/listAll"; (X)
-		return "redirect:/board/listAll";
+		return "redirect:/board/listPage";
 	}
 	
 	// 게시판 목록 - GET
@@ -142,7 +143,7 @@ public class BoardController {
 	
 	// 글정보 수정하기 - POST
 	@RequestMapping(value="/modify", method=RequestMethod.POST)
-	public String modifyPOST(RedirectAttributes rttr, /* @ModelAttribute 생략 */ BoardVO uvo) throws Exception{
+	public String modifyPOST(Criteria criteria, RedirectAttributes rttr, /* @ModelAttribute 생략 */ BoardVO uvo) throws Exception{
 		logger.info(" modifyPOST() 실행 ");
 		
 		// 한글처리 인코딩 (이미 필터 처리 완료! - web.xml)
@@ -157,11 +158,11 @@ public class BoardController {
 		// 리스트(listAll.jsp)로 이동 + 수정 완료라는 메세지 alert 출력
 		rttr.addAttribute("result", "modifyOK");
 		
-		return "redirect:/board/listAll";
+		return "redirect:/board/listPage?page=" + criteria.getPage();
 	}
 	
 	@RequestMapping(value="/remove", method=RequestMethod.POST)
-	public String removePOST(RedirectAttributes rttr, BoardVO dvo) throws Exception {
+	public String removePOST(Criteria criteria, RedirectAttributes rttr, BoardVO dvo) throws Exception {
 		logger.info(" removePOST() 호출! ");
 		
 		// 전달된 정보 (bno) 저장
@@ -179,7 +180,7 @@ public class BoardController {
 		
 		// 삭제 성공!
 		rttr.addFlashAttribute("result", "deleteOK");
-		return "redirect:/board/listAll";
+		return "redirect:/board/listPage?page=" + criteria.getPage();
 	}
 	
 	// 게시판 목록 - GET
@@ -202,8 +203,14 @@ public class BoardController {
 		List<BoardVO> boardList = bService.getBoardListPage(criteria);
 		logger.info(" BoardList : {} 개", boardList.size());
 		
+		// 페이징 처리에 필요한 정보
+		PageVO pageVO = new PageVO();
+		pageVO.setCriteria(criteria);
+		pageVO.setTotalCount(bService.getTotalCount());
+		
 		// 생성된 데이터를 뷰페이지에 전달(Model)
 		model.addAttribute("boardList", boardList);
+		model.addAttribute("pageVO", pageVO);
 		
 		// Session 영역에 정보를 저장 & 전달
 		session.setAttribute("updateCheck", true);

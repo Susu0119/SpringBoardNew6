@@ -34,4 +34,7 @@ public interface BoardService {
 	
 	// 게시판 목록 조회 (+ 페이징 처리)
 	public List<BoardVO> getBoardListPage(Criteria criteria) throws Exception;
+	
+	// 전체 글 개수 조회
+	public int getTotalCount() throws Exception;
 }

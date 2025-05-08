@@ -89,4 +89,10 @@ public class BoardServiceImpl implements BoardService {
 		
 		return bDAO.listPage(criteria);
 	}
+	
+	@Override
+	public int getTotalCount() throws Exception {
+		logger.info(" getTotalCount() 호출! ");
+		return bDAO.selectTotalCount();
+	}
 }
