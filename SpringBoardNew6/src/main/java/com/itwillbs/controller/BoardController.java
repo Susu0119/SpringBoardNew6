@@ -1,7 +1,10 @@
 package com.itwillbs.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -10,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -321,6 +326,48 @@ public class BoardController {
 		} // while
 		
 		return fileList;
+	}
+	
+	// 파일 다운로드 동작
+	@RequestMapping(value = "/download",method = RequestMethod.GET)
+	public void fileDownloadGET(@RequestParam("fileName") String fileName,
+			                    HttpServletRequest request,
+			                    HttpServletResponse response
+			                    ) throws Exception{
+		logger.info(" fileDownloadGET() ");
+		
+		// 다운로드 하려는 폴더 == 업로드한 폴더
+		final String FAKE_PATH = "/upload";
+		String downFile = request.getRealPath(FAKE_PATH) + "\\" + fileName ;
+		
+		// 다운로드할 파일 생성
+		File file = new File(downFile);
+		
+		String encodedFileName = URLEncoder.encode(fileName, "UTF-8");
+		
+		// 다운로드 정보를 출력할 객체
+		OutputStream out = response.getOutputStream();
+		response.setHeader("Cache-Control", "no-cache");
+		//response.addHeader("Content-disposition", "attachment; fileName="+fileName);
+		response.addHeader("Content-disposition", "attachment; fileName="+encodedFileName);
+		//=> 모든 파일들이 다운로드 형태로 처리 
+		
+		// 파일정보를 읽어오기
+		FileInputStream fis = new FileInputStream(file);
+		
+		byte[] buffer = new byte[1024 * 8]; // 8KB 
+		
+		while(true) {
+			int data = fis.read(buffer);
+			if(data == -1) break; // -1 (EOF, 파일의 끝)
+			
+			//파일 출력(다운로드)
+			out.write(buffer,0,data);
+		}
+		
+		fis.close();
+		out.close();
+		
 	}
 	
 }
