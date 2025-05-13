@@ -34,6 +34,8 @@ import com.itwillbs.domain.Criteria;
 import com.itwillbs.domain.PageVO;
 import com.itwillbs.service.BoardService;
 
+import net.coobird.thumbnailator.Thumbnails;
+
 @Controller
 @RequestMapping(value="/board/*")
 public class BoardController {
@@ -342,8 +344,26 @@ public class BoardController {
 		
 		// 다운로드할 파일 생성
 		File file = new File(downFile);
-		
 		String encodedFileName = URLEncoder.encode(fileName, "UTF-8");
+		
+		/***************************************************************/
+		// 파일 썸네일 만들기
+		
+		// ex) 파일테스트.png 
+		int lastIndex = encodedFileName.lastIndexOf("."); // 점(.)의 위치 저장
+		String thumbFileName = encodedFileName.substring(0, lastIndex); // 파일의 이름만 가져오기
+		
+		// thumbnail 이라는 폴더 생성 -> 이름.png 형태로 만들겠다.
+		File thumbNail = new File(request.getRealPath(FAKE_PATH) + "\\" + "thumbnail" + "\\" + thumbFileName + ".png");
+		if(file.exists()) { // 파일이 있을 때 
+			thumbNail.getParentFile().mkdirs();
+			Thumbnails.of(file).size(50, 50).outputFormat("png").toFile(thumbNail); // 다운로드 하려는 파일의 정보를 썸네일 화
+			// Q. 왜 다시 png를 붙여야 하는가? => 이름만 바꾼다고 해서 되는게 아님. 이름만 바꿨을 때, 파일이 제대로 안열리는 경우도 있음
+			logger.info(" 썸네일 생성 완료 ! ");
+		}
+		
+		/***************************************************************/
+		
 		
 		// 다운로드 정보를 출력할 객체
 		OutputStream out = response.getOutputStream();
@@ -366,6 +386,47 @@ public class BoardController {
 		}
 		
 		fis.close();
+		out.close();
+		
+	}
+	
+	// 파일 다운로드 동작
+	@RequestMapping(value = "/thumbnail",method = RequestMethod.GET)
+	public void thumbNailDownloadGET(@RequestParam("fileName") String fileName,
+			HttpServletRequest request,
+			HttpServletResponse response
+			) throws Exception{
+		logger.info(" thumbNailDownloadGET() ");
+		
+		// 다운로드 하려는 폴더 == 업로드한 폴더
+		final String FAKE_PATH = "/upload";
+		String downFile = request.getRealPath(FAKE_PATH) + "\\" + fileName ;
+		
+		// 다운로드할 파일 생성
+		File file = new File(downFile);
+		String encodedFileName = URLEncoder.encode(fileName, "UTF-8");
+		
+		// 다운로드 정보를 출력할 객체
+		OutputStream out = response.getOutputStream();
+
+		/***************************************************************/
+		// 파일 썸네일 만들기
+		
+		// ex) 파일테스트.png 
+		int lastIndex = encodedFileName.lastIndexOf("."); // 점(.)의 위치 저장
+		String thumbFileName = encodedFileName.substring(0, lastIndex); // 파일의 이름만 가져오기
+		
+		// thumbnail 이라는 폴더 생성 -> 이름.png 형태로 만들겠다.
+		File thumbNail = new File(request.getRealPath(FAKE_PATH) + "\\" + "thumbnail" + "\\" + thumbFileName + ".png");
+		if(file.exists()) { // 파일이 있을 때 
+			thumbNail.getParentFile().mkdirs();
+			Thumbnails.of(file).size(50, 50).outputFormat("png").toOutputStream(out); // 다운로드 하려는 파일의 정보를 썸네일 화
+			// Q. 왜 다시 png를 붙여야 하는가? => 이름만 바꾼다고 해서 되는게 아님. 이름만 바꿨을 때, 파일이 제대로 안열리는 경우도 있음
+			logger.info(" 썸네일 생성 완료 ! ");
+		}
+		
+		/***************************************************************/
+		
 		out.close();
 		
 	}
